@@ -9,6 +9,18 @@
           (else (inner-recursion (cdr input-list) (+ i 1)))))
   (inner-recursion input-list 0))
 
+(define (user-reverse input-list)
+   (if (null? input-list)
+       '()
+       (append (user-reverse (cdr input-list))
+               (list (car input-list)))))
+
+(define (sum-list input-list)
+  (if (null? input-list)
+      0
+      (+ (car input-list) (sum-list(cdr input-list)))))
+
+
 ; Task 5.1
 (display "\nTask 5.1\n")
 (display "Довжина списку:")
@@ -25,11 +37,11 @@
 (display "Позиція для старту інвертування:")
 (define reverse-position (read))
 
-(set! user-list (append (take user-list reverse-position) (reverse (list-tail user-list reverse-position))))
+(set! user-list (append (take user-list reverse-position) (user-reverse (list-tail user-list reverse-position))))
 (begin (display "Список після інвертування з заданої позиції: ")(display user-list)(display "\n"))
 
 ; в)
-(begin (display "Сума елементів з непарними індексами: ") (display (apply + (odd-indexed-values user-list))) (display "\n")) 
+(begin (display "Сума елементів з непарними індексами: ") (display (sum-list (odd-indexed-values user-list))) (display "\n")) 
 
 ; Task 5.2
 (display "\nTask 5.2\n")
