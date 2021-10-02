@@ -20,6 +20,18 @@
       0
       (+ (car input-list) (sum-list(cdr input-list)))))
 
+(define (is-in-list input-list value)
+ (cond
+  [(null? input-list) false]
+  [(= (car input-list) value) true]
+  [else (is-in-list (cdr input-list) value)]))
+
+(define (remove-from-list input-list values)
+  (if (null? input-list) '()
+      (begin (if (is-in-list values (car input-list))
+                 (append (list (car input-list)) (remove-from-list (cdr input-list) values))
+                 (remove-from-list (cdr input-list) values)))))
+
 
 ; Task 5.1
 (display "\nTask 5.1\n")
@@ -30,7 +42,7 @@
 (begin (display "Вихідний масив: ")(display user-list)(display "\n"))
 
 ; a)
-(set! user-list (remove* (odd-indexed-values user-list) user-list))
+(set! user-list (remove-from-list user-list (odd-indexed-values user-list)))
 (begin (display "Масив після видалення елементів з парними індексами: ")(display user-list)(display "\n"))
 
 ; б)
